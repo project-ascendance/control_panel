@@ -1,0 +1,2 @@
+class CreateContentDto < ApplicationRecord
+end

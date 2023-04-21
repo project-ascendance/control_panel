@@ -1,0 +1,14 @@
+<p style="color: green"><%= notice %></p>
+
+<h1>Create content dtos</h1>
+
+<div id="create_content_dtos">
+  <% @create_content_dtos.each do |create_content_dto| %>
+    <%= render create_content_dto %>
+    <p>
+      <%= link_to "Show this create content dto", create_content_dto %>
+    </p>
+  <% end %>
+</div>
+
+<%= link_to "New create content dto", new_create_content_dto_path %>
