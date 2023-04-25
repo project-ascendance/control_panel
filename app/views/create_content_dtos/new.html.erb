@@ -1,9 +1,19 @@
-<h1>New create content dto</h1>
+<head>
+</head>
+<body>
+  <%= render 'shared/header' %>
+  <section>
 
-<%= render "form", create_content_dto: @create_content_dto %>
+    <h1>Nyt Opslag</h1>
 
-<br>
+    <%= render "form", create_content_dto: @create_content_dto %>
 
-<div>
-  <%= link_to "Back to create content dtos", create_content_dtos_path %>
-</div>
+    <br>
+
+    <div>
+      <%= link_to "Back to create content dtos", create_content_dtos_path %>
+    </div>
+  </section>
+</body>
+
+

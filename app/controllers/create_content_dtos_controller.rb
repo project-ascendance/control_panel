@@ -12,6 +12,7 @@ class CreateContentDtosController < ApplicationController
 
   # GET /create_content_dtos/new
   def new
+    @sites_options = ['Orbogen.com', 'Abc-ordbogen.com']
     @create_content_dto = CreateContentDto.new
   end
 
@@ -23,15 +24,35 @@ class CreateContentDtosController < ApplicationController
   def create
     @create_content_dto = CreateContentDto.new(create_content_dto_params)
 
-    respond_to do |format|
-      if @create_content_dto.save
-        format.html { redirect_to create_content_dto_url(@create_content_dto), notice: "Create content dto was successfully created." }
-        format.json { render :show, status: :created, location: @create_content_dto }
-      else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @create_content_dto.errors, status: :unprocessable_entity }
-      end
-    end
+    @create_content_dto.category = params[:category]
+
+    # This makes sites work...
+    @create_content_dto.sites = params[:sites]
+
+    # Format the dates so it is correct format
+    start_date = params[:dates][:start].split("-").reverse
+    @create_content_dto.start_date = start_date.join('-')
+    end_date = params[:dates][:end].split("-").reverse
+    @create_content_dto.end_date = end_date.join('-')
+
+    # Fix image attribute by getting bytes instead of the file
+    @create_content_dto.image = @create_content_dto.image.bytes
+
+    # Add missing attributes (creation_time, author)
+    @create_content_dto.creation_time = Time.now.strftime("%d-%m-%Y")
+    @create_content_dto.author = "Feature not implemented"
+
+    render :json => @create_content_dto
+
+    #    respond_to do |format|
+    #  if @create_content_dto.save
+    #    format.html { redirect_to create_content_dto_url(@create_content_dto), notice: "Create content dto was successfully created." }
+    #    format.json { render :show, status: :created, location: @create_content_dto }
+    #  else
+    #    format.html { render :new, status: :unprocessable_entity }
+    #    format.json { render json: @create_content_dto.errors, status: :unprocessable_entity }
+    #  end
+    #end
   end
 
   # PATCH/PUT /create_content_dtos/1 or /create_content_dtos/1.json
@@ -65,6 +86,6 @@ class CreateContentDtosController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def create_content_dto_params
-      params.require(:create_content_dto).permit(:type, :title, :end_date, :start_date, :image, :body, :sites, :creation_tme, :author)
+      params.require(:create_content_dto).permit(:category, :title, :end_date, :start_date, :image, :body, :sites)
     end
 end

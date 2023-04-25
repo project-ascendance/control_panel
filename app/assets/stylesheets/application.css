@@ -21,12 +21,32 @@ header{
     width: 100%;
     position: relative;
     background: #00836d;
+    margin-bottom: 1em;
 }
 header .nav-section {
     margin-left: 5%;
     height: 70px;
     display: flex;
     align-items: center;
+}
+section{
+    margin: 0 auto 0 auto;
+    padding: 1px 2em 1em 2em;
+    width: fit-content;
+    background: white;
+    align-items: center;
+    justify-items: center;
+    display: flex;
+    flex-direction: column;
+}
+form > div{
+    margin-bottom: 10px;
+}
+label{
+    font-weight: bold;
+}
+div .choice-label{
+    font-weight: revert;
 }
 
 

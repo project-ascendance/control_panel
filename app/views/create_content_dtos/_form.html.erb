@@ -1,4 +1,4 @@
-<%= form_with(model: create_content_dto) do |form| %>
+<%= form_with(model: create_content_dto, exclude: [:creation_time, :author]) do |form| %>
   <% if create_content_dto.errors.any? %>
     <div style="color: red">
       <h2><%= pluralize(create_content_dto.errors.count, "error") %> prohibited this create_content_dto from being saved:</h2>
@@ -12,8 +12,24 @@
   <% end %>
 
   <div>
-    <%= form.label :type, style: "display: block" %>
-    <%= form.text_field :type %>
+    <%= form.label :category, style: "display: block" %>
+    <%= select_tag :category, options_for_select(["Nyhed", "Event"]) %>
+  </div>
+
+  <div>
+    <%= form.label 'Sider for Opslag', style: "display: block" %>
+    <% @sites_options.each do |option| %>
+      <%= check_box_tag 'sites[]', option %>
+      <%= label_tag option, nil, class: 'choice-label' %>
+    <% end %>
+  </div>
+
+  <div>
+    <%= form.label "Dato", style: "display: block" %>
+
+    <%= date_field("dates", "start", style: "display: flex") %>
+    <%= date_field("dates", "end", style: "display: flex") %>
+
   </div>
 
   <div>
@@ -22,41 +38,17 @@
   </div>
 
   <div>
-    <%= form.label :end_date, style: "display: block" %>
-    <%= form.text_field :end_date %>
-  </div>
-
-  <div>
-    <%= form.label :start_date, style: "display: block" %>
-    <%= form.text_field :start_date %>
+    <%= form.label :body, style: "display: block" %>
+    <%= form.text_area :body %>
   </div>
 
   <div>
     <%= form.label :image, style: "display: block" %>
-    <%= form.text_field :image %>
+    <%= form.file_field :image %>
   </div>
 
   <div>
-    <%= form.label :body, style: "display: block" %>
-    <%= form.text_field :body %>
-  </div>
-
-  <div>
-    <%= form.label :sites, style: "display: block" %>
-    <%= form.text_field :sites %>
-  </div>
-
-  <div>
-    <%= form.label :creation_tme, style: "display: block" %>
-    <%= form.text_field :creation_tme %>
-  </div>
-
-  <div>
-    <%= form.label :author, style: "display: block" %>
-    <%= form.text_field :author %>
-  </div>
-
-  <div>
+    <%= link_to "Cancel", :back %> <!-- MAKE THIS BTN -->
     <%= form.submit %>
   </div>
 <% end %>

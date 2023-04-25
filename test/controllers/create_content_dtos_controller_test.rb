@@ -17,7 +17,7 @@ class CreateContentDtosControllerTest < ActionDispatch::IntegrationTest
 
   test "should create create_content_dto" do
     assert_difference("CreateContentDto.count") do
-      post create_content_dtos_url, params: { create_content_dto: { author: @create_content_dto.author, body: @create_content_dto.body, creation_tme: @create_content_dto.creation_tme, end_date: @create_content_dto.end_date, image: @create_content_dto.image, sites: @create_content_dto.sites, start_date: @create_content_dto.start_date, title: @create_content_dto.title, type: @create_content_dto.type } }
+      post create_content_dtos_url, params: { create_content_dto: { author: @create_content_dto.author, body: @create_content_dto.body, creation_time: @create_content_dto.creation_tme, end_date: @create_content_dto.end_date, image: @create_content_dto.image, sites: @create_content_dto.sites, start_date: @create_content_dto.start_date, title: @create_content_dto.title, type: @create_content_dto.type } }
     end
 
     assert_redirected_to create_content_dto_url(CreateContentDto.last)
@@ -34,7 +34,7 @@ class CreateContentDtosControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should update create_content_dto" do
-    patch create_content_dto_url(@create_content_dto), params: { create_content_dto: { author: @create_content_dto.author, body: @create_content_dto.body, creation_tme: @create_content_dto.creation_tme, end_date: @create_content_dto.end_date, image: @create_content_dto.image, sites: @create_content_dto.sites, start_date: @create_content_dto.start_date, title: @create_content_dto.title, type: @create_content_dto.type } }
+    patch create_content_dto_url(@create_content_dto), params: { create_content_dto: { author: @create_content_dto.author, body: @create_content_dto.body, creation_time: @create_content_dto.creation_time, end_date: @create_content_dto.end_date, image: @create_content_dto.image, sites: @create_content_dto.sites, start_date: @create_content_dto.start_date, title: @create_content_dto.title, type: @create_content_dto.type } }
     assert_redirected_to create_content_dto_url(@create_content_dto)
   end
 
