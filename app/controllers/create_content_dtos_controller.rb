@@ -24,10 +24,17 @@ class CreateContentDtosController < ApplicationController
   def create
     @create_content_dto = CreateContentDto.new(create_content_dto_params)
 
-    @create_content_dto.category = params[:category]
-
-    # This makes sites work...
+    # This makes sites work, for some reason it doesn't do it automatically, same for content_type
     @create_content_dto.sites = params[:sites]
+    @create_content_dto.content_type = params[:content_type]
+
+    # Convert the file to a hash containing a data field & a type field
+    image = params[:create_content_dto][:image]
+    @create_content_dto.image = { data: image.read, type: image.content_type }
+
+    # Add missing attributes (creation_time, author)
+    @create_content_dto.creation_time = Time.now.strftime("%d-%m-%Y")
+    @create_content_dto.author = "Feature not implemented"
 
     # Format the dates so it is correct format
     start_date = params[:dates][:start].split("-").reverse
@@ -35,14 +42,7 @@ class CreateContentDtosController < ApplicationController
     end_date = params[:dates][:end].split("-").reverse
     @create_content_dto.end_date = end_date.join('-')
 
-    # Fix image attribute by getting bytes instead of the file
-    @create_content_dto.image = @create_content_dto.image.bytes
-
-    # Add missing attributes (creation_time, author)
-    @create_content_dto.creation_time = Time.now.strftime("%d-%m-%Y")
-    @create_content_dto.author = "Feature not implemented"
-
-    render :json => @create_content_dto
+    render formats: :json
 
     #    respond_to do |format|
     #  if @create_content_dto.save
@@ -86,6 +86,6 @@ class CreateContentDtosController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def create_content_dto_params
-      params.require(:create_content_dto).permit(:category, :title, :end_date, :start_date, :image, :body, :sites)
+      params.require(:create_content_dto).permit(:content_type, :title, :end_date, :start_date, :image, :body, :sites)
     end
 end

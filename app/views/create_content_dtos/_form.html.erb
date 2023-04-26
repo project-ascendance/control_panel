@@ -12,12 +12,12 @@
   <% end %>
 
   <div>
-    <%= form.label :category, style: "display: block" %>
-    <%= select_tag :category, options_for_select(["Nyhed", "Event"]) %>
+    <%= form.label 'Type', style: "display: block" %>
+    <%= select_tag :content_type, options_for_select(["Nyhed", "Event"]) %>
   </div>
 
   <div>
-    <%= form.label 'Sider for Opslag', style: "display: block" %>
+    <%= form.label 'Sider', style: "display: block" %>
     <% @sites_options.each do |option| %>
       <%= check_box_tag 'sites[]', option %>
       <%= label_tag option, nil, class: 'choice-label' %>
@@ -26,24 +26,23 @@
 
   <div>
     <%= form.label "Dato", style: "display: block" %>
-
-    <%= date_field("dates", "start", style: "display: flex") %>
-    <%= date_field("dates", "end", style: "display: flex") %>
+    <%= date_field("dates", "start", style: "display: inline-block") %> -
+    <%= date_field("dates", "end", style: "display: inline-block") %>
 
   </div>
 
   <div>
-    <%= form.label :title, style: "display: block" %>
+    <%= form.label 'Titel', style: "display: block" %>
     <%= form.text_field :title %>
   </div>
 
   <div>
-    <%= form.label :body, style: "display: block" %>
+    <%= form.label 'Tekst', style: "display: block" %>
     <%= form.text_area :body %>
   </div>
 
   <div>
-    <%= form.label :image, style: "display: block" %>
+    <%= form.label 'Billede', style: "display: block" %>
     <%= form.file_field :image %>
   </div>
 

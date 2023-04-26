@@ -10,12 +10,12 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_04_23_122058) do
+ActiveRecord::Schema[7.0].define(version: 2023_04_25_172751) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "create_content_dtos", force: :cascade do |t|
-    t.string "type"
+    t.string "content_type"
     t.string "title"
     t.string "end_date"
     t.string "start_date"
