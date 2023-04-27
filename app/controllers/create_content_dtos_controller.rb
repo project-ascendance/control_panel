@@ -12,7 +12,7 @@ class CreateContentDtosController < ApplicationController
 
   # GET /create_content_dtos/new
   def new
-    @sites_options = ['Orbogen.com', 'Abc-ordbogen.com']
+    @sites_options = ['Ordbogen.com', 'Abc-ordbogen.com']
     @create_content_dto = CreateContentDto.new
   end
 
@@ -29,8 +29,9 @@ class CreateContentDtosController < ApplicationController
     @create_content_dto.content_type = params[:content_type]
 
     # Convert the file to a hash containing a data field & a type field
+    # Unless: If NilClass don't do it, to escape error
     image = params[:create_content_dto][:image]
-    @create_content_dto.image = { data: image.read, type: image.content_type }
+    @create_content_dto.image = { data: image.read, type: image.content_type } unless image.class == NilClass
 
     # Add missing attributes (creation_time, author)
     @create_content_dto.creation_time = Time.now.strftime("%d-%m-%Y")
@@ -42,7 +43,8 @@ class CreateContentDtosController < ApplicationController
     end_date = params[:dates][:end].split("-").reverse
     @create_content_dto.end_date = end_date.join('-')
 
-    render formats: :json
+    render 'show'
+    # render formats: :json
 
     #    respond_to do |format|
     #  if @create_content_dto.save

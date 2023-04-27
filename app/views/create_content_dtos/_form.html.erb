@@ -47,7 +47,22 @@
   </div>
 
   <div>
-    <%= link_to "Cancel", :back %> <!-- MAKE THIS BTN -->
-    <%= form.submit %>
+    <%= link_to "Cancel", :back %> <!-- MAKE THIS BTN WITH CSS -->
+    <%= form.submit 'Vis', name: 'Vis', class: 'preview-submit' %>
+    <%= form.submit 'Gem', name: 'Gem', class: 'save-submit' %>
   </div>
 <% end %>
+
+<script>
+  const newTabSubmitBtn = document.querySelector('.preview-submit');
+  const saveSubmitBtn = document.querySelector('.save-submit');
+  const form = document.querySelector('form');
+
+  newTabSubmitBtn.addEventListener('click', (event) => {
+      form.target = '_blank';
+  });
+
+  saveSubmitBtn.addEventListener('click', (event) => {
+      form.target = '_self';
+  });
+</script>
