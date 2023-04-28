@@ -12,44 +12,49 @@
   <% end %>
 
   <div>
-    <%= form.label 'Type', style: "display: block" %>
+    <%= form.label 'Type' %>
     <%= select_tag :content_type, options_for_select(["Nyhed", "Event"]) %>
   </div>
 
   <div>
-    <%= form.label 'Sider', style: "display: block" %>
+    <%= form.label 'Sider' %>
     <% @sites_options.each do |option| %>
-      <%= check_box_tag 'sites[]', option %>
-      <%= label_tag option, nil, class: 'choice-label' %>
+      <div>
+        <%= check_box_tag 'sites[]', option %>
+        <%= label_tag option, nil, class: 'choice-label' %>
+      </div>
     <% end %>
   </div>
 
   <div>
-    <%= form.label "Dato", style: "display: block" %>
-    <%= date_field("dates", "start", style: "display: inline-block") %> -
-    <%= date_field("dates", "end", style: "display: inline-block") %>
+    <%= form.label "Dato" %>
+    <div class="side-by-side">
+      <%= date_field("dates", "start") %>
+      -
+      <%= date_field("dates", "end") %>
+    </div>
 
   </div>
 
   <div>
-    <%= form.label 'Titel', style: "display: block" %>
+    <%= form.label 'Titel' %>
     <%= form.text_field :title %>
   </div>
 
   <div>
-    <%= form.label 'Tekst', style: "display: block" %>
+    <%= form.label 'Tekst' %>
     <%= form.text_area :body %>
   </div>
 
   <div>
-    <%= form.label 'Billede', style: "display: block" %>
-    <%= form.file_field :image %>
+    <%= form.label 'Billede' %>
+    <%= form.file_field :image, accept: 'image/png,image/jpeg' %>
   </div>
 
   <div>
-    <%= link_to "Cancel", :back %> <!-- MAKE THIS BTN WITH CSS -->
-    <%= form.submit 'Vis', name: 'Vis', class: 'preview-submit' %>
-    <%= form.submit 'Gem', name: 'Gem', class: 'save-submit' %>
+    <%= link_to "Cancel", :back, class: 'button' %> <!-- MAKE THIS BTN WITH CSS -->
+    <%= form.submit 'Vis', name: 'submit_btn', class: 'preview-submit' %>
+    <%= form.submit 'Gem', name: 'submit_btn', class: 'save-submit' %>
   </div>
 <% end %>
 

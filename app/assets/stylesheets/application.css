@@ -30,17 +30,31 @@ header .nav-section {
     align-items: center;
 }
 section{
+    display: flex;
+    flex-direction: column;
     margin: 0 auto 0 auto;
     padding: 1px 2em 1em 2em;
     width: fit-content;
     background: white;
     align-items: center;
     justify-items: center;
+
+}
+
+form > div{
     display: flex;
     flex-direction: column;
-}
-form > div{
     margin-bottom: 10px;
+    flex-wrap: wrap;
+}
+form > div .side-by-side{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+form{
+    flex-direction: column;
+    display: flex;
 }
 label{
     font-weight: bold;
@@ -48,5 +62,6 @@ label{
 div .choice-label{
     font-weight: revert;
 }
+
 
 

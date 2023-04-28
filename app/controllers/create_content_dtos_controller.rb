@@ -29,9 +29,9 @@ class CreateContentDtosController < ApplicationController
     @create_content_dto.content_type = params[:content_type]
 
     # Convert the file to a hash containing a data field & a type field
-    # Unless: If NilClass don't do it, to escape error
+    # Unless: If NilClass don't do it, to escape error.
     image = params[:create_content_dto][:image]
-    @create_content_dto.image = { data: image.read, type: image.content_type } unless image.class == NilClass
+    @create_content_dto.image = { data: Base64.strict_encode64(IO.binread(image.tempfile)), type: image.content_type } unless image.class == NilClass
 
     # Add missing attributes (creation_time, author)
     @create_content_dto.creation_time = Time.now.strftime("%d-%m-%Y")
@@ -43,8 +43,17 @@ class CreateContentDtosController < ApplicationController
     end_date = params[:dates][:end].split("-").reverse
     @create_content_dto.end_date = end_date.join('-')
 
-    render 'show'
-    # render formats: :json
+    # Check which button has been pressed and act accordingly
+    puts "Which button? " + params[:submit_btn].to_s
+    case params[:submit_btn]
+    when 'Vis'
+      render 'show'
+    when 'Gem'
+      render formats: :json
+    else
+      # type code here
+    end
+
 
     #    respond_to do |format|
     #  if @create_content_dto.save
