@@ -51,23 +51,33 @@
     <%= form.file_field :image, accept: 'image/png,image/jpeg' %>
   </div>
 
-  <div>
-    <%= link_to "Cancel", :back, class: 'button' %> <!-- MAKE THIS BTN WITH CSS -->
-    <%= form.submit 'Vis', name: 'submit_btn', class: 'preview-submit' %>
-    <%= form.submit 'Gem', name: 'submit_btn', class: 'save-submit' %>
+  <div class="side-by-side">
+    <%= link_to "Fortryd", :back, class: 'btn-shape btn-cancel' %>
+    <%= form.submit 'Vis', name: 'submit_btn', class: 'preview-submit btn-shape btn-preview' %>
+    <%= form.submit 'Gem', name: 'submit_btn', class: 'save-submit btn-shape btn-save' %>
   </div>
 <% end %>
 
 <script>
+  // These does let me open the submitted data in new window or save it.
   const newTabSubmitBtn = document.querySelector('.preview-submit');
   const saveSubmitBtn = document.querySelector('.save-submit');
   const form = document.querySelector('form');
-
   newTabSubmitBtn.addEventListener('click', (event) => {
       form.target = '_blank';
   });
-
   saveSubmitBtn.addEventListener('click', (event) => {
       form.target = '_self';
   });
+
+  // These does let textareas size by content (why isn't that an attribute tho)
+  const tx = document.getElementsByTagName("textarea");
+  for (let i = 0; i < tx.length; i++) {
+      tx[i].setAttribute("style", "height:" + (tx[i].scrollHeight) + "px;overflow-y:hidden;");
+      tx[i].addEventListener("input", OnInput, false);
+  }
+  function OnInput() {
+      this.style.height = 0;
+      this.style.height = (this.scrollHeight) + "px";
+  }
 </script>

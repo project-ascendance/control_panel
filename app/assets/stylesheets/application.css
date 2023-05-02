@@ -13,9 +13,17 @@
  *= require_tree .
  *= require_self
  */
+
+@import "https://fonts.googleapis.com/css?family=Open+Sans";
+@import "https://fonts.googleapis.com/css?family=Bitter";
+
 body{
     margin: 0;
     background: #e0e7ef;
+    font-family: 'Open Sans', sans-serif;
+}
+h1, h2, h3, h4, h5, h6{
+    font-family: 'bitter', sans-serif;
 }
 header{
     width: 100%;
@@ -52,15 +60,67 @@ form > div .side-by-side{
     flex-direction: row;
     justify-content: space-between;
 }
+form > div.side-by-side{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
 form{
     flex-direction: column;
     display: flex;
+}
+input, select, textarea{
+    border: 1px solid;
+    border-radius: 5px;
+    min-height: 20px;
+}
+input[type="file"]{
+    border: revert;
+    border-radius: revert;
+}
+input[type="checkbox"]{
+    min-height: revert;
 }
 label{
     font-weight: bold;
 }
 div .choice-label{
     font-weight: revert;
+}
+.btn-shape{
+    font-family: 'open sans', sans-serif;
+    font-size: small;
+    border: 1px solid;
+    border-radius: 30px;
+    padding: 6px 15px;
+    min-width: 76px;
+    background: #f4f4f4;
+    text-decoration: none;
+    color: #000000;
+    transition-duration: 0.3s;
+}
+.btn-shape:hover{
+    color: #ffffff;
+    cursor: pointer;
+}
+.btn-save{
+    border-color: #00836d;
+}
+.btn-save:hover{
+    background-color: #00836d;
+}
+.btn-preview{
+    border-color: #304232;
+}
+.btn-preview:hover{
+    background-color: #304232;
+}
+.btn-cancel{
+    min-width: revert;
+    border-color: #c73938;
+}
+.btn-cancel:hover{
+    background-color: #c73938;
 }
 
 
