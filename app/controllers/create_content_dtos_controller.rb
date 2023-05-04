@@ -31,7 +31,8 @@ class CreateContentDtosController < ApplicationController
     # Convert the file to a hash containing a data field & a type field
     # Unless: If NilClass don't do it, to escape error.
     image = params[:create_content_dto][:image]
-    @create_content_dto.image = { data: Base64.strict_encode64(IO.binread(image.tempfile)), type: image.content_type } unless image.class == NilClass
+    hash = { data: Base64.strict_encode64(IO.binread(image.tempfile)), type: image.content_type} unless image.class == NilClass
+    @create_content_dto.image = hash.to_json unless image.class == NilClass
 
     # Add missing attributes (creation_time, author)
     @create_content_dto.creation_time = Time.now.strftime("%d-%m-%Y")
@@ -51,7 +52,8 @@ class CreateContentDtosController < ApplicationController
     when 'Gem'
       render formats: :json
     else
-      # type code here
+      # IDK WHERE THIS LEADS
+      render create_content_dto_path
     end
 
 

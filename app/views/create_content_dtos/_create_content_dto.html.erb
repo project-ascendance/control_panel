@@ -1,39 +1,50 @@
-<div id="<%= dom_id create_content_dto %>">
+
+<section class="show border-bottom">
+  <div class="element-center">
+    <h1>
+      Forhåndsvisning
+    </h1>
+  </div>
+</section>
+
+<article id="<%= dom_id create_content_dto %>" class="show border-bottom">
+
+  <% unless create_content_dto.image.nil? %>
+    <div class="show-image">
+      <% image = JSON.parse(create_content_dto.image) %>
+      <img src="data:<%= image['type'] %>;base64,<%= image['data'] %>" alt="Picture">
+    </div>
+  <% end %>
+
+  <h1>
+    <%= create_content_dto.title %>
+  </h1>
+
+  <p>
+    <%= create_content_dto.body %>
+  </p>
+</article>
+
+<section class="show bottom-page-margin">
   <p>
     <strong>Type:</strong>
     <%= create_content_dto.content_type %>
   </p>
 
   <p>
-    <strong>Title:</strong>
-    <%= create_content_dto.title %>
+    <strong>Aktiv i perioden:</strong> <%= create_content_dto.end_date %> <strong> - </strong><%= create_content_dto.start_date %>
   </p>
 
-  <p>
-    <strong>End date:</strong>
-    <%= create_content_dto.end_date %>
-  </p>
+  <div>
+    <p>
+      <strong>Sider:</strong>
+      <% create_content_dto.sites.each do |elem| %>
+        <%= elem %><%= ',' unless elem == create_content_dto.sites.last %>
+      <% end %>
+    </p>
+  </div>
 
-  <p>
-    <strong>Start date:</strong>
-    <%= create_content_dto.start_date %>
-  </p>
-
-  <p>
-    <strong>Image:</strong>
-    <%= create_content_dto.image %>
-  </p>
-
-  <p>
-    <strong>Body:</strong>
-    <%= create_content_dto.body %>
-  </p>
-
-  <p>
-    <strong>Sites:</strong>
-    <%= create_content_dto.sites %>
-  </p>
-
+  <!-- Not useful information?
   <p>
     <strong>Creation time:</strong>
     <%= create_content_dto.creation_time %>
@@ -43,5 +54,5 @@
     <strong>Author:</strong>
     <%= create_content_dto.author %>
   </p>
-
-</div>
+  -->
+</section>

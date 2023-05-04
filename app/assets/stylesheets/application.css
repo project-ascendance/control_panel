@@ -17,15 +17,36 @@
 @import "https://fonts.googleapis.com/css?family=Open+Sans";
 @import "https://fonts.googleapis.com/css?family=Bitter";
 
+article.show{
+    display: flex;
+    flex-direction: column;
+    margin: 0 auto 0 auto;
+    padding: 1em 2em 1em 2em;
+    background: #f1f7f4;
+    width: 100vw;
+    max-width: 555px;
+    box-sizing: border-box;
+}
+.show-image{
+    display: flex;
+    flex-direction: column;
+}
+.element-center{
+    display: flex;
+    justify-content: center;
+}
+.border-bottom{
+    border-bottom: 1px solid black;
+}
 body{
-    margin: 0;
+    margin: 0 0 1em 0;
     background: #e0e7ef;
     font-family: 'Open Sans', sans-serif;
 }
 h1, h2, h3, h4, h5, h6{
     font-family: 'bitter', sans-serif;
 }
-header{
+header.top-bar{
     width: 100%;
     position: relative;
     background: #00836d;
@@ -37,18 +58,29 @@ header .nav-section {
     display: flex;
     align-items: center;
 }
-section{
+section.show{
     display: flex;
     flex-direction: column;
     margin: 0 auto 0 auto;
-    padding: 1px 2em 1em 2em;
+    padding: 1em 2em 0 2em;
+    background: white;
+    width: 100vw;
+    max-width: 555px;
+    box-sizing: border-box;
+}
+section.bottom-page-margin{
+     margin-bottom: 1em;
+}
+
+section.new{
+    display: flex;
+    flex-direction: column;
+    margin: 0 auto 0 auto;
+    padding: 1em 2em 1em 2em;
     width: fit-content;
     background: white;
     align-items: center;
-    justify-items: center;
-
 }
-
 form > div{
     display: flex;
     flex-direction: column;
