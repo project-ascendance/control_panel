@@ -1,3 +1,5 @@
+require 'faraday'
+
 class CreateContentDtosController < ApplicationController
   before_action :set_create_content_dto, only: %i[ show edit update destroy ]
 
@@ -31,29 +33,67 @@ class CreateContentDtosController < ApplicationController
     # Convert the file to a hash containing a data field & a type field
     # Unless: If NilClass don't do it, to escape error.
     image = params[:create_content_dto][:image]
-    hash = { data: Base64.strict_encode64(IO.binread(image.tempfile)), type: image.content_type} unless image.class == NilClass
-    @create_content_dto.image = hash.to_json unless image.class == NilClass
+    if image.nil?
+      @create_content_dto.image = ''
+    else
+      hash = { data: Base64.strict_encode64(IO.binread(image.tempfile)), type: image.content_type }
+      @create_content_dto.image = hash.to_json
+    end
 
-    # Add missing attributes (creation_time, author)
-    @create_content_dto.creation_time = Time.now.strftime("%d-%m-%Y")
-    @create_content_dto.author = "Feature not implemented"
-
-    # Format the dates so it is correct format
+    # Format start and end dates
     start_date = params[:dates][:start].split("-").reverse
     @create_content_dto.start_date = start_date.join('-')
     end_date = params[:dates][:end].split("-").reverse
     @create_content_dto.end_date = end_date.join('-')
 
     # Check which button has been pressed and act accordingly
-    puts "Which button? " + params[:submit_btn].to_s
     case params[:submit_btn]
+      # Render show view as external tab
     when 'Vis'
       render 'show'
+
+      # Send post via faraday to API
     when 'Gem'
-      render formats: :json
+
+      # Change type to english
+      case @create_content_dto.content_type
+      when 'Nyhed'
+        @create_content_dto.content_type = 'News'
+
+      when 'Event'
+        @create_content_dto.content_type = 'Event'
+
+      else
+        @create_content_dto.content_type
+
+      end
+
+      # Add missing attributes (creation_time, author)
+      @create_content_dto.creation_time = Time.now.strftime("%d-%m-%Y")
+      @create_content_dto.author = "Feature not implemented"
+
+      payload_henrik = {
+        id: 21,
+        type: @create_content_dto.content_type,
+        title: @create_content_dto.title,
+        sites: @create_content_dto.sites,
+        body: @create_content_dto.body,
+        image: @create_content_dto.image,
+        startDate: @create_content_dto.end_date,
+        endDate: @create_content_dto.start_date,
+        creationTime: @create_content_dto.creation_time,
+        author: @create_content_dto.author
+      }
+
+      response = base_connection.post('contents') do |req|
+        req.body = payload_henrik.to_json
+      end
+
+      render json: response.status
     else
-      # IDK WHERE THIS LEADS
-      render create_content_dto_path
+
+      # This is useless, unless weird bug happens
+      render formats: :json
     end
 
 
@@ -101,4 +141,12 @@ class CreateContentDtosController < ApplicationController
     def create_content_dto_params
       params.require(:create_content_dto).permit(:content_type, :title, :end_date, :start_date, :image, :body, :sites)
     end
+
+  # Base connection for Faraday
+  def base_connection
+    Faraday.new(
+      url:'https://ascendance.hrmoller.com/api/',
+      headers: {'Content-Type' => 'application/json'}
+    )
+  end
 end
