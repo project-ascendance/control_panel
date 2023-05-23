@@ -5,11 +5,13 @@ class CreateContentDtosController < ApplicationController
 
   # GET /create_content_dtos or /create_content_dtos.json
   def index
-    @create_content_dtos = CreateContentDto.all
+    response = base_connection.get('contents')
+    @create_content_dtos = JSON.parse(response.body) unless response.status != 200
   end
 
   # GET /create_content_dtos/1 or /create_content_dtos/1.json
   def show
+
   end
 
   # GET /create_content_dtos/new
@@ -34,7 +36,7 @@ class CreateContentDtosController < ApplicationController
     # Unless: If NilClass don't do it, to escape error.
     image = params[:create_content_dto][:image]
     if image.nil?
-      @create_content_dto.image = ''
+      @create_content_dto.image = nil
     else
       hash = { data: Base64.strict_encode64(IO.binread(image.tempfile)), type: image.content_type }
       @create_content_dto.image = hash.to_json
