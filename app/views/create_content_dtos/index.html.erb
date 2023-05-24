@@ -19,12 +19,9 @@
 
   <% @create_content_dtos.each do |content| %>
     <article class="index-article">
-      <% if content['id'] == 21 %>
-        <% unless content['image'].nil? %>
-          <% image = JSON.parse(content['image']) %>
-          <img src="data:<%= image['type'] %>;base64,<%= image['data'] %>" alt="Picture" class="index-image">
-        <% end %>
-      <% else %>
+      <% begin %>
+          <img src="data:image/png;base64,<%= content['image'] %>" alt="Picture" onerror="this.src='https://via.placeholder.com/300x200'" class="index-image">
+      <% rescue %>
         <img src="https://via.placeholder.com/300x200" alt="Placeholder Image" class="index-image">
       <% end %>
 

@@ -50,14 +50,15 @@ class CreateContentDtosController < ApplicationController
 
     # Check which button has been pressed and act accordingly
     case params[:submit_btn]
-      # Render show view as external tab
+
+    # Render show view as external tab
     when 'Vis'
       render 'show'
 
-      # Send post via faraday to API
+    # Send post via faraday to API
     when 'Gem'
 
-      # Change type to english
+      # Change type from danish to english
       case @create_content_dto.content_type
       when 'Nyhed'
         @create_content_dto.content_type = 'News'
@@ -75,14 +76,13 @@ class CreateContentDtosController < ApplicationController
       @create_content_dto.author = "Feature not implemented"
 
       payload_henrik = {
-        id: 21,
         type: @create_content_dto.content_type,
         title: @create_content_dto.title,
         sites: @create_content_dto.sites,
         body: @create_content_dto.body,
         image: @create_content_dto.image,
-        startDate: @create_content_dto.end_date,
-        endDate: @create_content_dto.start_date,
+        startDate: @create_content_dto.start_date,
+        endDate: @create_content_dto.end_date,
         creationTime: @create_content_dto.creation_time,
         author: @create_content_dto.author
       }
@@ -91,7 +91,7 @@ class CreateContentDtosController < ApplicationController
         req.body = payload_henrik.to_json
       end
 
-      render json: response.status
+      redirect_to action: "index", status: response.status
     else
 
       # This is useless, unless weird bug happens
